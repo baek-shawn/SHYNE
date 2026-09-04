@@ -1,0 +1,20 @@
+[project]
+name = "shyne"
+version = "0.1.0"
+description = "SHYNE: Local / Private Coding Agent"
+requires-python = ">=3.11"
+readme = "README.md"
+# Step 1 구현을 시작할 때 fastapi/uvicorn/httpx/pyyaml 등 실제 의존성을 추가한다.
+dependencies = []
+
+[tool.uv]
+package = false
+
+[dependency-groups]
+dev = [
+    "pytest>=8.3.0",
+]
+
+[tool.pytest.ini_options]
+pythonpath = ["backend"]
+testpaths = ["tests"]

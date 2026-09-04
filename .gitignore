@@ -1,0 +1,25 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
+*.egg-info/
+
+# uv
+.uv-cache/
+
+# 환경 변수 / 비밀 값
+.env
+
+# OS
+.DS_Store
+Thumbs.db
+
+# 에디터
+.vscode/
+.idea/
+
+# 비교 실험 결과물 (용량이 커질 수 있어 기본 제외, 필요 시 개별적으로 git add)
+results/**/*
+!results/**/
+!results/README.md
