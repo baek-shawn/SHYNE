@@ -7,8 +7,9 @@
 ## 현재 상태
 
 Step 1(Agent Loop + 최소 Tool 6종: `list_files`, `read_file`, `search_files`, `write_file`,
-`edit_file`, `run_command`) 구현 직전 단계입니다. 지금은 디렉터리 구조와 문서 체계만 갖춰져
-있고 실행 가능한 코드는 아직 없습니다. 실시간 진행 상태는 [`.agent/HANDOFF.md`](.agent/HANDOFF.md)를 확인하세요.
+`edit_file`, `run_command`)의 코드와 자동 테스트가 구현돼 있고, 실제 LLM을 연결한 수동 테스트
+(Test A/B/C)로 완료 여부를 확인하는 단계입니다. 실시간 진행 상태는
+[`.agent/HANDOFF.md`](.agent/HANDOFF.md)를 확인하세요.
 
 ## 프로젝트 구조
 
@@ -41,6 +42,7 @@ SHYNE/
 | `CLAUDE.md` | Codex와 Claude Code가 공유하는 개발·문서·검증 규칙과 현재 아키텍처 | 안정적인 프로젝트 규칙이 바뀔 때 |
 | `.agent/README.md` | 작업 인계 문서의 작성법, Git 동기화 절차와 금지 정보 | 인계 운영 방식이 바뀔 때 |
 | `.agent/HANDOFF.md` | 지금까지 완료한 내용, 현재 문제, 다음 작업과 마지막 검증 | 실제 변경 작업을 마치거나 중단할 때마다 최신 상태로 덮어쓰기 |
+| `dev_step.md` (루트) | 지금 진행 중인 Step 하나를 어떻게 구현할지 상세 설계 | Step 시작 전 작성, Step 완료 시 삭제 후 다음 Step 문서로 교체 |
 | `docs/ROADMAP.md` | SHYNE의 장기 방향, Step 1~13 구현 로드맵, 비교 실험 방법론 | 장기 방향이나 우선순위가 바뀔 때 |
 | `docs/DEPLOYMENT_TODO.md` | 다른 PC(집/노트북) 이전, vLLM 연결 등 배포 관련 남은 작업 | 해당 작업의 상태가 바뀔 때 |
 | `docs/HISTORY.md` | 실제 코드·설정·파일 구조·프로젝트 설계의 완료된 변경 이력 | 실제 변경이 발생했을 때 끝에 누적 |
@@ -63,4 +65,19 @@ API 키, 토큰, `.env` 내용, 회사 내부 비밀, 사용자별 절대 경로
 
 ## 실행
 
-아직 실행 가능한 코드가 없습니다. Step 1 구현이 시작되면 이 절을 채웁니다.
+```text
+uv sync                      # 의존성 설치 (.venv 생성)
+uv run pytest                # 자동 테스트 (LLM 불필요)
+```
+
+Agent를 실제로 돌리려면 `.env.example`을 `.env`로 복사해 `LLM_PROVIDER`, `LLM_BASE_URL`,
+`LLM_API_KEY`, `LLM_MODEL`을 채운 뒤 최소 CLI를 실행합니다. Tool 호출과 결과가 그대로 출력됩니다.
+
+```text
+uv run python backend/main.py --dir playground "test.py 파일을 만들고 hello world를 출력해."
+```
+
+- `--dir`: Agent가 작업할 디렉터리 (기본값: 현재 디렉터리). Agent는 이 디렉터리 밖의 파일에
+  접근할 수 없습니다. `playground/`는 수동 테스트용으로 Git에서 제외돼 있습니다.
+- `--full`: Tool 인자/결과를 생략 없이 전부 출력합니다.
+- 수동 테스트 시나리오(Test A/B/C)는 [`tests/README.md`](tests/README.md)를 참고하세요.

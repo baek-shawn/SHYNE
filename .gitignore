@@ -19,6 +19,9 @@ Thumbs.db
 .vscode/
 .idea/
 
+# Agent 수동 테스트(Test A/B/C)용 작업 폴더: `backend/main.py --dir playground "..."`
+playground/
+
 # 비교 실험 결과물 (용량이 커질 수 있어 기본 제외, 필요 시 개별적으로 git add)
 results/**/*
 !results/**/

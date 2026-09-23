@@ -4,8 +4,12 @@ version = "0.1.0"
 description = "SHYNE: Local / Private Coding Agent"
 requires-python = ">=3.11"
 readme = "README.md"
-# Step 1 구현을 시작할 때 fastapi/uvicorn/httpx/pyyaml 등 실제 의존성을 추가한다.
-dependencies = []
+# httpx: OpenAI-compatible API 호출, python-dotenv: .env 로드.
+# fastapi/uvicorn은 Step 2(UI/API), pyyaml은 Step 3(config.yaml)에서 추가한다.
+dependencies = [
+    "httpx>=0.28.1",
+    "python-dotenv>=1.2.3",
+]
 
 [tool.uv]
 package = false
